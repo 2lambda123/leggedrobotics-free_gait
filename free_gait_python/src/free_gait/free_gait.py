@@ -13,7 +13,7 @@ import free_gait_msgs.msg
 def get_package_path(package):
     """
 
-    :param package: 
+    :param package:
 
     """
     rospack = rospkg.RosPack()
@@ -23,7 +23,7 @@ def get_package_path(package):
 def load_action_from_file(file_path, placeholders=None):
     """
 
-    :param file_path: 
+    :param file_path:
     :param placeholders:  (Default value = None)
 
     """
@@ -82,13 +82,13 @@ def load_action_from_file_and_transform(
 ):
     """
 
-    :param file_path: 
+    :param file_path:
     :param source_frame_id:  (Default value = "")
     :param position:  (Default value = [0)
-    :param 0: 
-    :param 0]: 
+    :param 0:
+    :param 0]:
     :param orientation:  (Default value = [0)
-    :param 1]: 
+    :param 1]:
 
     """
     import os
@@ -111,14 +111,14 @@ def parse_action(
 ):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
     :param source_frame_id:  (Default value = "")
     :param target_frame_id:  (Default value = "")
     :param position:  (Default value = [0)
-    :param 0: 
-    :param 0]: 
+    :param 0:
+    :param 0]:
     :param orientation:  (Default value = [0)
-    :param 1]: 
+    :param 1]:
 
     """
     goal = free_gait_msgs.msg.ExecuteStepsGoal()
@@ -182,8 +182,8 @@ def parse_action(
 def replace_placeholders(yaml_object, placeholders):
     """
 
-    :param yaml_object: 
-    :param placeholders: 
+    :param yaml_object:
+    :param placeholders:
 
     """
     if type(yaml_object) == dict:
@@ -205,7 +205,7 @@ def replace_placeholders(yaml_object, placeholders):
 def parse_footstep(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     footstep = free_gait_msgs.msg.Footstep()
@@ -235,7 +235,7 @@ def parse_footstep(yaml_object):
 def parse_end_effector_target(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     end_effector_target = free_gait_msgs.msg.EndEffectorTarget()
@@ -279,7 +279,7 @@ def parse_end_effector_target(yaml_object):
 def parse_end_effector_trajectory(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     end_effector_trajectory = free_gait_msgs.msg.EndEffectorTrajectory()
@@ -311,7 +311,7 @@ def parse_end_effector_trajectory(yaml_object):
 def parse_leg_mode(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     leg_mode = free_gait_msgs.msg.LegMode()
@@ -335,7 +335,7 @@ def parse_leg_mode(yaml_object):
 def parse_joint_trajectory(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     joint_trajectory = free_gait_msgs.msg.JointTrajectory()
@@ -361,7 +361,7 @@ def parse_joint_trajectory(yaml_object):
 def parse_base_auto(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     base_auto = free_gait_msgs.msg.BaseAuto()
@@ -385,7 +385,7 @@ def parse_base_auto(yaml_object):
 def parse_base_target(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     base_target = free_gait_msgs.msg.BaseTarget()
@@ -407,7 +407,7 @@ def parse_base_target(yaml_object):
 def parse_base_trajectory(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     base_trajectory = free_gait_msgs.msg.BaseTrajectory()
@@ -423,7 +423,7 @@ def parse_base_trajectory(yaml_object):
 def parse_custom_command(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     custom_command = free_gait_msgs.msg.CustomCommand()
@@ -441,7 +441,7 @@ def parse_custom_command(yaml_object):
 def parse_duration(duration):
     """
 
-    :param duration: 
+    :param duration:
 
     """
     return rospy.Duration(duration)
@@ -450,7 +450,7 @@ def parse_duration(duration):
 def parse_position(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     point = geometry_msgs.msg.Point()
@@ -463,7 +463,7 @@ def parse_position(yaml_object):
 def parse_orientation(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     quaternion = geometry_msgs.msg.Quaternion()
@@ -484,7 +484,7 @@ def parse_orientation(yaml_object):
 def parse_vector(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     vector = geometry_msgs.msg.Vector3()
@@ -497,7 +497,7 @@ def parse_vector(yaml_object):
 def parse_transform(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     transform = geometry_msgs.msg.Transform()
@@ -511,7 +511,7 @@ def parse_transform(yaml_object):
 def parse_position_stamped(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     point = geometry_msgs.msg.PointStamped()
@@ -525,7 +525,7 @@ def parse_position_stamped(yaml_object):
 def parse_pose_stamped(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     pose = geometry_msgs.msg.PoseStamped()
@@ -541,7 +541,7 @@ def parse_pose_stamped(yaml_object):
 def parse_vector_stamped(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     vector = geometry_msgs.msg.Vector3Stamped()
@@ -555,8 +555,8 @@ def parse_vector_stamped(yaml_object):
 def parse_multi_dof_trajectory(joint_name, trajectory):
     """
 
-    :param joint_name: 
-    :param trajectory: 
+    :param joint_name:
+    :param trajectory:
 
     """
     output = trajectory_msgs.msg.MultiDOFJointTrajectory()
@@ -575,8 +575,8 @@ def parse_multi_dof_trajectory(joint_name, trajectory):
 def parse_translational_trajectory(joint_name, trajectory):
     """
 
-    :param joint_name: 
-    :param trajectory: 
+    :param joint_name:
+    :param trajectory:
 
     """
     output = trajectory_msgs.msg.MultiDOFJointTrajectory()
@@ -594,7 +594,7 @@ def parse_translational_trajectory(joint_name, trajectory):
 def parse_joint_trajectories(yaml_object):
     """
 
-    :param yaml_object: 
+    :param yaml_object:
 
     """
     joint_trajectory = trajectory_msgs.msg.JointTrajectory()
@@ -618,11 +618,11 @@ def parse_joint_trajectories(yaml_object):
 def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientation):
     """
 
-    :param goal: 
-    :param source_frame_id: 
-    :param target_frame_id: 
-    :param position: 
-    :param orientation: 
+    :param goal:
+    :param source_frame_id:
+    :param target_frame_id:
+    :param position:
+    :param orientation:
 
     """
     # For each step.
@@ -643,10 +643,10 @@ def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientat
 def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, transform):
     """
 
-    :param message: 
-    :param source_frame_id: 
-    :param target_frame_id: 
-    :param transform: 
+    :param message:
+    :param source_frame_id:
+    :param target_frame_id:
+    :param transform:
 
     """
 
@@ -733,13 +733,13 @@ def transform_coordinates(
 ):
     """
 
-    :param source_frame_id: 
-    :param target_frame_id: 
+    :param source_frame_id:
+    :param target_frame_id:
     :param position:  (Default value = [0)
-    :param 0: 
-    :param 0]: 
+    :param 0:
+    :param 0]:
     :param orientation:  (Default value = [0)
-    :param 1]: 
+    :param 1]:
     :param tf_buffer:  (Default value = None)
 
     """
@@ -761,8 +761,8 @@ def transform_coordinates(
 def get_transform(source_frame_id, target_frame_id, tf_buffer=None):
     """
 
-    :param source_frame_id: 
-    :param target_frame_id: 
+    :param source_frame_id:
+    :param target_frame_id:
     :param tf_buffer:  (Default value = None)
 
     """
@@ -778,8 +778,8 @@ def get_transform(source_frame_id, target_frame_id, tf_buffer=None):
 def get_tf_transform(source_frame_id, target_frame_id, tf_buffer=None):
     """
 
-    :param source_frame_id: 
-    :param target_frame_id: 
+    :param source_frame_id:
+    :param target_frame_id:
     :param tf_buffer:  (Default value = None)
 
     """
@@ -818,8 +818,8 @@ def get_tf_transform(source_frame_id, target_frame_id, tf_buffer=None):
 def transform_vector(transform, vector):
     """
 
-    :param transform: 
-    :param vector: 
+    :param transform:
+    :param vector:
 
     """
     angle, direction, point = rotation_from_matrix(transform)
@@ -834,8 +834,8 @@ def transform_vector(transform, vector):
 def transform_position(transform, position):
     """
 
-    :param transform: 
-    :param position: 
+    :param transform:
+    :param position:
 
     """
     transformed_point = transform.dot([position.x, position.y, position.z, 1.0])
@@ -847,8 +847,8 @@ def transform_position(transform, position):
 def transform_orientation(transform, orientation):
     """
 
-    :param transform: 
-    :param orientation: 
+    :param transform:
+    :param orientation:
 
     """
     q1 = quaternion_from_matrix(transform)
@@ -860,8 +860,8 @@ def transform_orientation(transform, orientation):
 def transform_pose(transform, pose):
     """
 
-    :param transform: 
-    :param pose: 
+    :param transform:
+    :param pose:
 
     """
     pose.position = transform_position(transform, pose.position)
@@ -872,8 +872,8 @@ def transform_pose(transform, pose):
 def transform_transformation(transform, transformation):
     """
 
-    :param transform: 
-    :param transformation: 
+    :param transform:
+    :param transformation:
 
     """
     transformation.translation = transform_position(
@@ -886,7 +886,7 @@ def transform_transformation(transform, transformation):
 def check_if_vector_valid(vector):
     """
 
-    :param vector: 
+    :param vector:
 
     """
     if vector.x == 0 and vector.y == 0 and vector.z == 0:
@@ -898,7 +898,7 @@ def check_if_vector_valid(vector):
 def check_if_position_valid(position):
     """
 
-    :param position: 
+    :param position:
 
     """
     if position.x == 0 and position.y == 0 and position.z == 0:
@@ -910,7 +910,7 @@ def check_if_position_valid(position):
 def check_if_orientation_valid(orientation):
     """
 
-    :param orientation: 
+    :param orientation:
 
     """
     if (
@@ -927,7 +927,7 @@ def check_if_orientation_valid(orientation):
 def check_if_pose_valid(pose):
     """
 
-    :param pose: 
+    :param pose:
 
     """
     if check_if_position_valid(pose.position) and check_if_orientation_valid(
@@ -972,7 +972,7 @@ class LocalTransformListener:
     def callback(self, data):
         """
 
-        :param data: 
+        :param data:
 
         """
         who = data._connection_header.get("callerid", "default_authority")
@@ -982,7 +982,7 @@ class LocalTransformListener:
     def static_callback(self, data):
         """
 
-        :param data: 
+        :param data:
 
         """
         who = data._connection_header.get("callerid", "default_authority")

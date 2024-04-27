@@ -5,7 +5,7 @@ string name
 
 # Trajectory for the end effector.
 # Trajectory can contain transforms, twists, or accelerations,
-# or combinations of these. 
+# or combinations of these.
 trajectory_msgs/MultiDOFJointTrajectory trajectory
 
 # Target surface normal.
