@@ -696,7 +696,7 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id,
     else:
         for m in [
                 a for a in dir(message)
-                if not (a.startswith("__") or a.startswith("_")
+                if not (a.startswith(("__", "_"))
                         or a == "deserialize" or a == "deserialize_numpy"
                         or a == "serialize" or a == "serialize_numpy")
         ]:
