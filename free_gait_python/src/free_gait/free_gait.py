@@ -1,12 +1,11 @@
 #! /usr/bin/env python
-
 import geometry_msgs.msg
 import rospkg
 import rospy
 import tf2_ros
 import trajectory_msgs.msg
-from tf2_msgs.msg import TFMessage  # For local LocalTransformListener.
 from tf.transformations import *
+from tf2_msgs.msg import TFMessage  # For local LocalTransformListener.
 
 import free_gait_msgs.msg
 
