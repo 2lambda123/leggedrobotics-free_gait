@@ -49,37 +49,38 @@ def load_action_from_file(file_path, placeholders=None):
     orientation = [0, 0, 0, 1]
     if "adapt_coordinates" in parameters[0][0]:
         is_adapt = True
-        adapt_parameters = parameters[0][0]["adapt_coordinates"][0]["transform"]
+        adapt_parameters = parameters[0][0]["adapt_coordinates"][0][
+            "transform"]
         source_frame_id = adapt_parameters["source_frame"]
         target_frame_id = adapt_parameters["target_frame"]
         if "transform_in_source_frame" in adapt_parameters:
             if "position" in adapt_parameters["transform_in_source_frame"]:
-                position = adapt_parameters["transform_in_source_frame"]["position"]
+                position = adapt_parameters["transform_in_source_frame"][
+                    "position"]
             if "orientation" in adapt_parameters["transform_in_source_frame"]:
                 orientation = adapt_parameters["transform_in_source_frame"][
-                    "orientation"
-                ]
+                    "orientation"]
                 if len(orientation) == 3:
                     orientation = quaternion_from_euler(
-                        orientation[0], orientation[1], orientation[2]
-                    )
+                        orientation[0], orientation[1], orientation[2])
 
     if is_adapt:
         try:
-            (position, orientation) = transform_coordinates(
-                source_frame_id, target_frame_id, position, orientation
-            )
+            (position,
+             orientation) = transform_coordinates(source_frame_id,
+                                                  target_frame_id, position,
+                                                  orientation)
         except TypeError:
             return None
 
-    return parse_action(
-        parameters, source_frame_id, target_frame_id, position, orientation
-    )
+    return parse_action(parameters, source_frame_id, target_frame_id, position,
+                        orientation)
 
 
-def load_action_from_file_and_transform(
-    file_path, source_frame_id="", position=None, orientation=None
-):
+def load_action_from_file_and_transform(file_path,
+                                        source_frame_id="",
+                                        position=None,
+                                        orientation=None):
     """
 
     :param file_path:
@@ -98,12 +99,15 @@ def load_action_from_file_and_transform(
         rospy.logerr('File with path "' + file_path + '" does not exists.')
         return None
 
-    return parse_action(load_file(file_path), source_frame_id, position, orientation)
+    return parse_action(load_file(file_path), source_frame_id, position,
+                        orientation)
 
 
-def parse_action(
-    yaml_object, source_frame_id="", target_frame_id="", position=None, orientation=None
-):
+def parse_action(yaml_object,
+                 source_frame_id="",
+                 target_frame_id="",
+                 position=None,
+                 orientation=None):
     """
 
     :param yaml_object:
@@ -128,46 +132,43 @@ def parse_action(
 
         for motion_parameter in step_parameter:
             if "footstep" in motion_parameter:
-                step.footstep.append(parse_footstep(motion_parameter["footstep"]))
+                step.footstep.append(
+                    parse_footstep(motion_parameter["footstep"]))
             if "end_effector_target" in motion_parameter:
                 step.end_effector_target.append(
-                    parse_end_effector_target(motion_parameter["end_effector_target"])
-                )
+                    parse_end_effector_target(
+                        motion_parameter["end_effector_target"]))
             if "end_effector_trajectory" in motion_parameter:
                 step.end_effector_trajectory.append(
                     parse_end_effector_trajectory(
-                        motion_parameter["end_effector_trajectory"]
-                    )
-                )
+                        motion_parameter["end_effector_trajectory"]))
             if "leg_mode" in motion_parameter:
-                step.leg_mode.append(parse_leg_mode(motion_parameter["leg_mode"]))
+                step.leg_mode.append(
+                    parse_leg_mode(motion_parameter["leg_mode"]))
             if "joint_trajectory" in motion_parameter:
                 step.joint_trajectory.append(
-                    parse_joint_trajectory(motion_parameter["joint_trajectory"])
-                )
+                    parse_joint_trajectory(
+                        motion_parameter["joint_trajectory"]))
             if "base_auto" in motion_parameter:
-                step.base_auto.append(parse_base_auto(motion_parameter["base_auto"]))
+                step.base_auto.append(
+                    parse_base_auto(motion_parameter["base_auto"]))
             if "base_target" in motion_parameter:
                 step.base_target.append(
-                    parse_base_target(motion_parameter["base_target"])
-                )
+                    parse_base_target(motion_parameter["base_target"]))
             if "base_trajectory" in motion_parameter:
                 step.base_trajectory.append(
-                    parse_base_trajectory(motion_parameter["base_trajectory"])
-                )
+                    parse_base_trajectory(motion_parameter["base_trajectory"]))
             if "custom_command" in motion_parameter:
                 step.custom_command.append(
-                    parse_custom_command(motion_parameter["custom_command"])
-                )
+                    parse_custom_command(motion_parameter["custom_command"]))
 
         goal.steps.append(step)
 
     # Adapt to local coordinates if desired.
-    if not (
-        numpy.array_equal(position, [0, 0, 0])
-        and numpy.array_equal(orientation, [0, 0, 0, 1])
-    ):
-        adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientation)
+    if not (numpy.array_equal(position, [0, 0, 0])
+            and numpy.array_equal(orientation, [0, 0, 0, 1])):
+        adapt_coordinates(goal, source_frame_id, target_frame_id, position,
+                          orientation)
 
     # print goal
     return goal
@@ -218,11 +219,13 @@ def parse_footstep(yaml_object):
     if "ignore_contact" in yaml_object:
         footstep.ignore_contact = yaml_object["ignore_contact"]
     if "surface_normal" in yaml_object:
-        footstep.surface_normal = parse_vector_stamped(yaml_object["surface_normal"])
+        footstep.surface_normal = parse_vector_stamped(
+            yaml_object["surface_normal"])
     if "friction_coefficient" in yaml_object:
         footstep.friction_coefficient = yaml_object["friction_coefficient"]
     if "ignore_for_pose_adaptation" in yaml_object:
-        footstep.ignore_for_pose_adaptation = yaml_object["ignore_for_pose_adaptation"]
+        footstep.ignore_for_pose_adaptation = yaml_object[
+            "ignore_for_pose_adaptation"]
     return footstep
 
 
@@ -239,34 +242,29 @@ def parse_end_effector_target(yaml_object):
         end_effector_target.name = yaml_object["name"]
     if "target_position" in yaml_object:
         end_effector_target.target_position.append(
-            parse_position_stamped(yaml_object["target_position"])
-        )
+            parse_position_stamped(yaml_object["target_position"]))
     if "target_velocity" in yaml_object:
         end_effector_target.target_velocity.append(
-            parse_vector_stamped(yaml_object["target_velocity"])
-        )
+            parse_vector_stamped(yaml_object["target_velocity"]))
     if "target_acceleration" in yaml_object:
         end_effector_target.target_acceleration.append(
-            parse_vector_stamped(yaml_object["target_acceleration"])
-        )
+            parse_vector_stamped(yaml_object["target_acceleration"]))
     if "target_force" in yaml_object:
         end_effector_target.target_force.append(
-            parse_vector_stamped(yaml_object["target_force"])
-        )
+            parse_vector_stamped(yaml_object["target_force"]))
     if "average_velocity" in yaml_object:
         end_effector_target.average_velocity = yaml_object["average_velocity"]
     if "ignore_contact" in yaml_object:
         end_effector_target.ignore_contact = yaml_object["ignore_contact"]
     if "surface_normal" in yaml_object:
         end_effector_target.surface_normal = parse_vector_stamped(
-            yaml_object["surface_normal"]
-        )
+            yaml_object["surface_normal"])
     if "friction_coefficient" in yaml_object:
-        end_effector_target.friction_coefficient = yaml_object["friction_coefficient"]
+        end_effector_target.friction_coefficient = yaml_object[
+            "friction_coefficient"]
     if "ignore_for_pose_adaptation" in yaml_object:
         end_effector_target.ignore_for_pose_adaptation = yaml_object[
-            "ignore_for_pose_adaptation"
-        ]
+            "ignore_for_pose_adaptation"]
     return end_effector_target
 
 
@@ -283,22 +281,18 @@ def parse_end_effector_trajectory(yaml_object):
         end_effector_trajectory.name = yaml_object["name"]
     if "trajectory" in yaml_object:
         end_effector_trajectory.trajectory = parse_translational_trajectory(
-            end_effector_trajectory.name, yaml_object["trajectory"]
-        )
+            end_effector_trajectory.name, yaml_object["trajectory"])
     if "surface_normal" in yaml_object:
         end_effector_trajectory.surface_normal = parse_vector_stamped(
-            yaml_object["surface_normal"]
-        )
+            yaml_object["surface_normal"])
     if "friction_coefficient" in yaml_object:
         end_effector_trajectory.friction_coefficient = yaml_object[
-            "friction_coefficient"
-        ]
+            "friction_coefficient"]
     if "ignore_contact" in yaml_object:
         end_effector_trajectory.ignore_contact = yaml_object["ignore_contact"]
     if "ignore_for_pose_adaptation" in yaml_object:
         end_effector_trajectory.ignore_for_pose_adaptation = yaml_object[
-            "ignore_for_pose_adaptation"
-        ]
+            "ignore_for_pose_adaptation"]
     return end_effector_trajectory
 
 
@@ -318,11 +312,13 @@ def parse_leg_mode(yaml_object):
     if "duration" in yaml_object:
         leg_mode.duration = parse_duration(yaml_object["duration"])
     if "surface_normal" in yaml_object:
-        leg_mode.surface_normal = parse_vector_stamped(yaml_object["surface_normal"])
+        leg_mode.surface_normal = parse_vector_stamped(
+            yaml_object["surface_normal"])
     if "friction_coefficient" in yaml_object:
         leg_mode.friction_coefficient = yaml_object["friction_coefficient"]
     if "ignore_for_pose_adaptation" in yaml_object:
-        leg_mode.ignore_for_pose_adaptation = yaml_object["ignore_for_pose_adaptation"]
+        leg_mode.ignore_for_pose_adaptation = yaml_object[
+            "ignore_for_pose_adaptation"]
     return leg_mode
 
 
@@ -339,16 +335,15 @@ def parse_joint_trajectory(yaml_object):
         joint_trajectory.name = yaml_object["name"]
     if "trajectory" in yaml_object:
         joint_trajectory.trajectory = parse_joint_trajectories(
-            yaml_object["trajectory"]
-        )
+            yaml_object["trajectory"])
     if "ignore_contact" in yaml_object:
         joint_trajectory.ignore_contact = yaml_object["ignore_contact"]
     if "surface_normal" in yaml_object:
         joint_trajectory.surface_normal = parse_vector_stamped(
-            yaml_object["surface_normal"]
-        )
+            yaml_object["surface_normal"])
     if "friction_coefficient" in yaml_object:
-        joint_trajectory.friction_coefficient = yaml_object["friction_coefficient"]
+        joint_trajectory.friction_coefficient = yaml_object[
+            "friction_coefficient"]
     return joint_trajectory
 
 
@@ -365,12 +360,13 @@ def parse_base_auto(yaml_object):
         base_auto.height = yaml_object["height"]
     if "ignore_timing_of_leg_motion" in yaml_object:
         base_auto.ignore_timing_of_leg_motion = yaml_object[
-            "ignore_timing_of_leg_motion"
-        ]
+            "ignore_timing_of_leg_motion"]
     if "average_linear_velocity" in yaml_object:
-        base_auto.average_linear_velocity = yaml_object["average_linear_velocity"]
+        base_auto.average_linear_velocity = yaml_object[
+            "average_linear_velocity"]
     if "average_angular_velocity" in yaml_object:
-        base_auto.average_angular_velocity = yaml_object["average_angular_velocity"]
+        base_auto.average_angular_velocity = yaml_object[
+            "average_angular_velocity"]
     if "support_margin" in yaml_object:
         base_auto.support_margin = yaml_object["support_margin"]
     return base_auto
@@ -389,12 +385,13 @@ def parse_base_target(yaml_object):
         base_target.target = parse_pose_stamped(yaml_object["target"])
     if "ignore_timing_of_leg_motion" in yaml_object:
         base_target.ignore_timing_of_leg_motion = yaml_object[
-            "ignore_timing_of_leg_motion"
-        ]
+            "ignore_timing_of_leg_motion"]
     if "average_linear_velocity" in yaml_object:
-        base_target.average_linear_velocity = yaml_object["average_linear_velocity"]
+        base_target.average_linear_velocity = yaml_object[
+            "average_linear_velocity"]
     if "average_angular_velocity" in yaml_object:
-        base_target.average_angular_velocity = yaml_object["average_angular_velocity"]
+        base_target.average_angular_velocity = yaml_object[
+            "average_angular_velocity"]
     return base_target
 
 
@@ -409,8 +406,7 @@ def parse_base_trajectory(yaml_object):
         return base_trajectory
     if "trajectory" in yaml_object:
         base_trajectory.trajectory = parse_multi_dof_trajectory(
-            "base", yaml_object["trajectory"]
-        )
+            "base", yaml_object["trajectory"])
     return base_trajectory
 
 
@@ -467,7 +463,8 @@ def parse_orientation(yaml_object):
         quaternion.z = yaml_object[2]
         quaternion.w = yaml_object[3]
     elif len(yaml_object) == 3:
-        q = quaternion_from_euler(yaml_object[0], yaml_object[1], yaml_object[2])
+        q = quaternion_from_euler(yaml_object[0], yaml_object[1],
+                                  yaml_object[2])
         quaternion.x = q[0]
         quaternion.y = q[1]
         quaternion.z = q[2]
@@ -609,7 +606,8 @@ def parse_joint_trajectories(yaml_object):
     return joint_trajectory
 
 
-def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientation):
+def adapt_coordinates(goal, source_frame_id, target_frame_id, position,
+                      orientation):
     """
 
     :param goal:
@@ -629,12 +627,12 @@ def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientat
     z_axis = [0, 0, 1]
     rotation = rotation_matrix(yaw, z_axis)
     transform = concatenate_matrices(translation, rotation)
-    adapt_coordinates_recursively(
-        goal.steps, source_frame_id, target_frame_id, transform
-    )
+    adapt_coordinates_recursively(goal.steps, source_frame_id, target_frame_id,
+                                  transform)
 
 
-def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, transform):
+def adapt_coordinates_recursively(message, source_frame_id, target_frame_id,
+                                  transform):
     """
 
     :param message:
@@ -645,39 +643,29 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
     """
 
     # Stop recursion for methods and primitive types.
-    if (
-        callable(message)
-        or isinstance(message, int)
-        or isinstance(message, str)
-        or isinstance(message, bool)
-        or isinstance(message, float)
-    ):
+    if (callable(message) or isinstance(message, int)
+            or isinstance(message, str) or isinstance(message, bool)
+            or isinstance(message, float)):
         return
 
     # Transform known geometries.
     if isinstance(message, geometry_msgs.msg.Vector3Stamped):
-        if (
-            check_if_vector_valid(message.vector)
-            and message.header.frame_id == source_frame_id
-        ):
+        if (check_if_vector_valid(message.vector)
+                and message.header.frame_id == source_frame_id):
             message.header.frame_id = target_frame_id
             vector = transform_vector(transform, message.vector)
             message.vector = vector
         return
     elif isinstance(message, geometry_msgs.msg.PointStamped):
-        if (
-            check_if_position_valid(message.point)
-            and message.header.frame_id == source_frame_id
-        ):
+        if (check_if_position_valid(message.point)
+                and message.header.frame_id == source_frame_id):
             message.header.frame_id = target_frame_id
             position = transform_position(transform, message.point)
             message.point = position
         return
     elif isinstance(message, geometry_msgs.msg.PoseStamped):
-        if (
-            check_if_pose_valid(message.pose)
-            and message.header.frame_id == source_frame_id
-        ):
+        if (check_if_pose_valid(message.pose)
+                and message.header.frame_id == source_frame_id):
             message.header.frame_id = target_frame_id
             pose = transform_pose(transform, message.pose)
             message.pose = pose
@@ -686,7 +674,8 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
         if message.header.frame_id == source_frame_id:
             message.header.frame_id = target_frame_id
             for i, point in enumerate(message.points):
-                for j, transformation in enumerate(message.points[i].transforms):
+                for j, transformation in enumerate(
+                        message.points[i].transforms):
                     t = transform_transformation(transform, transformation)
                     message.points[i].transforms[j] = t
         return
@@ -694,32 +683,28 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
     # Do recursion for lists and members.
     if hasattr(message, "__iter__"):
         for m in message:  # TODO Need enumerate?
-            adapt_coordinates_recursively(
-                m, source_frame_id, target_frame_id, transform
-            )
+            adapt_coordinates_recursively(m, source_frame_id, target_frame_id,
+                                          transform)
     else:
         for m in [
-            a
-            for a in dir(message)
-            if not (
-                a.startswith(("__", "_"))
-                or a == "deserialize"
-                or a == "deserialize_numpy"
-                or a == "serialize"
-                or a == "serialize_numpy"
-            )
+                a for a in dir(message)
+                if not (a.startswith(("__", "_")) or a == "deserialize"
+                        or a == "deserialize_numpy" or a == "serialize"
+                        or a == "serialize_numpy")
         ]:
-            adapt_coordinates_recursively(
-                eval("message." + m), source_frame_id, target_frame_id, transform
-            )
+            adapt_coordinates_recursively(eval("message." + m),
+                                          source_frame_id, target_frame_id,
+                                          transform)
 
 
 # Position and orientation defined in source frame.
 
 
-def transform_coordinates(
-    source_frame_id, target_frame_id, position=None, orientation=None, tf_buffer=None
-):
+def transform_coordinates(source_frame_id,
+                          target_frame_id,
+                          position=None,
+                          orientation=None,
+                          tf_buffer=None):
     """
 
     :param source_frame_id:
@@ -733,15 +718,13 @@ def transform_coordinates(
     orientation = [0, 0, 0, 1] if orientation is None else orientation
 
     try:
-        (translation, rotation) = get_tf_transform(
-            source_frame_id, target_frame_id, tf_buffer
-        )
+        (translation, rotation) = get_tf_transform(source_frame_id,
+                                                   target_frame_id, tf_buffer)
     except TypeError:
         return None
 
-    transformed_position = translation + quaternion_matrix(rotation)[:3, :3].dot(
-        position
-    )
+    transformed_position = translation + quaternion_matrix(
+        rotation)[:3, :3].dot(position)
     transformed_orientation = quaternion_multiply(rotation, orientation)
     return transformed_position, transformed_orientation
 
@@ -755,9 +738,8 @@ def get_transform(source_frame_id, target_frame_id, tf_buffer=None):
 
     """
 
-    (translation, rotation) = get_tf_transform(
-        source_frame_id, target_frame_id, tf_buffer
-    )
+    (translation, rotation) = get_tf_transform(source_frame_id,
+                                               target_frame_id, tf_buffer)
     translation_matrix_form = translation_matrix(translation)
     rotation_matrix_form = quaternion_matrix(rotation)
     return concatenate_matrices(translation_matrix_form, rotation_matrix_form)
@@ -778,24 +760,19 @@ def get_tf_transform(source_frame_id, target_frame_id, tf_buffer=None):
         listener = LocalTransformListener(tf_buffer)
 
     try:
-        transform = tf_buffer.lookup_transform(
-            target_frame_id, source_frame_id, rospy.Time(), rospy.Duration(10.0)
-        )
+        transform = tf_buffer.lookup_transform(target_frame_id,
+                                               source_frame_id, rospy.Time(),
+                                               rospy.Duration(10.0))
         if listener is not None:
             listener.unregister()
             del listener
     except (
-        tf2_ros.LookupException,
-        tf2_ros.ConnectivityException,
-        tf2_ros.ExtrapolationException,
+            tf2_ros.LookupException,
+            tf2_ros.ConnectivityException,
+            tf2_ros.ExtrapolationException,
     ):
-        rospy.logerr(
-            'Could not look up TF transformation from "'
-            + source_frame_id
-            + '" to "'
-            + target_frame_id
-            + '".'
-        )
+        rospy.logerr('Could not look up TF transformation from "' +
+                     source_frame_id + '" to "' + target_frame_id + '".')
         return None
 
     t = transform.transform.translation
@@ -812,11 +789,10 @@ def transform_vector(transform, vector):
     """
     angle, direction, point = rotation_from_matrix(transform)
     transformed_vector = rotation_matrix(angle, direction).dot(
-        [vector.x, vector.y, vector.z, 1.0]
-    )
-    return geometry_msgs.msg.Vector3(
-        transformed_vector[0], transformed_vector[1], transformed_vector[2]
-    )
+        [vector.x, vector.y, vector.z, 1.0])
+    return geometry_msgs.msg.Vector3(transformed_vector[0],
+                                     transformed_vector[1],
+                                     transformed_vector[2])
 
 
 def transform_position(transform, position):
@@ -826,10 +802,10 @@ def transform_position(transform, position):
     :param position:
 
     """
-    transformed_point = transform.dot([position.x, position.y, position.z, 1.0])
-    return geometry_msgs.msg.Point(
-        transformed_point[0], transformed_point[1], transformed_point[2]
-    )
+    transformed_point = transform.dot(
+        [position.x, position.y, position.z, 1.0])
+    return geometry_msgs.msg.Point(transformed_point[0], transformed_point[1],
+                                   transformed_point[2])
 
 
 def transform_orientation(transform, orientation):
@@ -864,10 +840,10 @@ def transform_transformation(transform, transformation):
     :param transformation:
 
     """
-    transformation.translation = transform_position(
-        transform, transformation.translation
-    )
-    transformation.rotation = transform_orientation(transform, transformation.rotation)
+    transformation.translation = transform_position(transform,
+                                                    transformation.translation)
+    transformation.rotation = transform_orientation(transform,
+                                                    transformation.rotation)
     return transformation
 
 
@@ -901,12 +877,8 @@ def check_if_orientation_valid(orientation):
     :param orientation:
 
     """
-    if (
-        orientation.x == 0
-        and orientation.y == 0
-        and orientation.z == 0
-        and orientation.w == 0
-    ):
+    if (orientation.x == 0 and orientation.y == 0 and orientation.z == 0
+            and orientation.w == 0):
         return False
     else:
         return True
@@ -919,8 +891,7 @@ def check_if_pose_valid(pose):
 
     """
     if check_if_position_valid(pose.position) and check_if_orientation_valid(
-        pose.orientation
-    ):
+            pose.orientation):
         return True
     else:
         return False
@@ -945,9 +916,8 @@ class LocalTransformListener:
         """
         self.buffer = buffer
         self.tf_sub = rospy.Subscriber("/tf", TFMessage, self.callback)
-        self.tf_static_sub = rospy.Subscriber(
-            "/tf_static", TFMessage, self.static_callback
-        )
+        self.tf_static_sub = rospy.Subscriber("/tf_static", TFMessage,
+                                              self.static_callback)
 
     def __del__(self):
         self.unregister()
