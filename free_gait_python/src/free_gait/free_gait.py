@@ -466,7 +466,7 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
         for m in message:  # TODO Need enumerate?
             adapt_coordinates_recursively(m, source_frame_id, target_frame_id, transform)
     else:
-        for m in [a for a in dir(message) if not (a.startswith('__') or a.startswith('_') or \
+        for m in [a for a in dir(message) if not (a.startswith(('__', '_')) or \
                 a == 'deserialize' or a == 'deserialize_numpy' or a == 'serialize' or a == 'serialize_numpy')]:
             adapt_coordinates_recursively(eval("message." + m), source_frame_id, target_frame_id, transform)
 
