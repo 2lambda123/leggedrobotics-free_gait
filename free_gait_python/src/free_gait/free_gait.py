@@ -12,11 +12,22 @@ import free_gait_msgs.msg
 
 
 def get_package_path(package):
+    """
+
+    :param package: 
+
+    """
     rospack = rospkg.RosPack()
     return rospack.get_path(package)
 
 
 def load_action_from_file(file_path, placeholders=None):
+    """
+
+    :param file_path: 
+    :param placeholders:  (Default value = None)
+
+    """
     import os
 
     from rosparam import load_file
@@ -70,6 +81,17 @@ def load_action_from_file(file_path, placeholders=None):
 def load_action_from_file_and_transform(
     file_path, source_frame_id="", position=[0, 0, 0], orientation=[0, 0, 0, 1]
 ):
+    """
+
+    :param file_path: 
+    :param source_frame_id:  (Default value = "")
+    :param position:  (Default value = [0)
+    :param 0: 
+    :param 0]: 
+    :param orientation:  (Default value = [0)
+    :param 1]: 
+
+    """
     import os
 
     from rosparam import load_file
@@ -88,6 +110,18 @@ def parse_action(
     position=[0, 0, 0],
     orientation=[0, 0, 0, 1],
 ):
+    """
+
+    :param yaml_object: 
+    :param source_frame_id:  (Default value = "")
+    :param target_frame_id:  (Default value = "")
+    :param position:  (Default value = [0)
+    :param 0: 
+    :param 0]: 
+    :param orientation:  (Default value = [0)
+    :param 1]: 
+
+    """
     goal = free_gait_msgs.msg.ExecuteStepsGoal()
 
     # For each step.
@@ -147,6 +181,12 @@ def parse_action(
 
 
 def replace_placeholders(yaml_object, placeholders):
+    """
+
+    :param yaml_object: 
+    :param placeholders: 
+
+    """
     if type(yaml_object) == dict:
         for i, item in yaml_object.items():
             if type(item) == str:
@@ -164,6 +204,11 @@ def replace_placeholders(yaml_object, placeholders):
 
 
 def parse_footstep(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     footstep = free_gait_msgs.msg.Footstep()
     if not yaml_object:
         return footstep
@@ -189,6 +234,11 @@ def parse_footstep(yaml_object):
 
 
 def parse_end_effector_target(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     end_effector_target = free_gait_msgs.msg.EndEffectorTarget()
     if not yaml_object:
         return end_effector_target
@@ -228,6 +278,11 @@ def parse_end_effector_target(yaml_object):
 
 
 def parse_end_effector_trajectory(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     end_effector_trajectory = free_gait_msgs.msg.EndEffectorTrajectory()
     if not yaml_object:
         return end_effector_trajectory
@@ -255,6 +310,11 @@ def parse_end_effector_trajectory(yaml_object):
 
 
 def parse_leg_mode(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     leg_mode = free_gait_msgs.msg.LegMode()
     if not yaml_object:
         return leg_mode
@@ -274,6 +334,11 @@ def parse_leg_mode(yaml_object):
 
 
 def parse_joint_trajectory(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     joint_trajectory = free_gait_msgs.msg.JointTrajectory()
     if not yaml_object:
         return joint_trajectory
@@ -295,6 +360,11 @@ def parse_joint_trajectory(yaml_object):
 
 
 def parse_base_auto(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     base_auto = free_gait_msgs.msg.BaseAuto()
     if not yaml_object:
         return base_auto
@@ -314,6 +384,11 @@ def parse_base_auto(yaml_object):
 
 
 def parse_base_target(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     base_target = free_gait_msgs.msg.BaseTarget()
     if not yaml_object:
         return base_target
@@ -331,6 +406,11 @@ def parse_base_target(yaml_object):
 
 
 def parse_base_trajectory(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     base_trajectory = free_gait_msgs.msg.BaseTrajectory()
     if not yaml_object:
         return base_trajectory
@@ -342,6 +422,11 @@ def parse_base_trajectory(yaml_object):
 
 
 def parse_custom_command(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     custom_command = free_gait_msgs.msg.CustomCommand()
     if not yaml_object:
         return custom_command
@@ -355,10 +440,20 @@ def parse_custom_command(yaml_object):
 
 
 def parse_duration(duration):
+    """
+
+    :param duration: 
+
+    """
     return rospy.Duration(duration)
 
 
 def parse_position(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     point = geometry_msgs.msg.Point()
     point.x = yaml_object[0]
     point.y = yaml_object[1]
@@ -367,6 +462,11 @@ def parse_position(yaml_object):
 
 
 def parse_orientation(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     quaternion = geometry_msgs.msg.Quaternion()
     if len(yaml_object) == 4:
         quaternion.x = yaml_object[0]
@@ -383,6 +483,11 @@ def parse_orientation(yaml_object):
 
 
 def parse_vector(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     vector = geometry_msgs.msg.Vector3()
     vector.x = yaml_object[0]
     vector.y = yaml_object[1]
@@ -391,6 +496,11 @@ def parse_vector(yaml_object):
 
 
 def parse_transform(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     transform = geometry_msgs.msg.Transform()
     if "position" in yaml_object:
         transform.translation = parse_vector(yaml_object["position"])
@@ -400,6 +510,11 @@ def parse_transform(yaml_object):
 
 
 def parse_position_stamped(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     point = geometry_msgs.msg.PointStamped()
     if "frame" in yaml_object:
         point.header.frame_id = yaml_object["frame"]
@@ -409,6 +524,11 @@ def parse_position_stamped(yaml_object):
 
 
 def parse_pose_stamped(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     pose = geometry_msgs.msg.PoseStamped()
     if "frame" in yaml_object:
         pose.header.frame_id = yaml_object["frame"]
@@ -420,6 +540,11 @@ def parse_pose_stamped(yaml_object):
 
 
 def parse_vector_stamped(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     vector = geometry_msgs.msg.Vector3Stamped()
     if "frame" in yaml_object:
         vector.header.frame_id = yaml_object["frame"]
@@ -429,6 +554,12 @@ def parse_vector_stamped(yaml_object):
 
 
 def parse_multi_dof_trajectory(joint_name, trajectory):
+    """
+
+    :param joint_name: 
+    :param trajectory: 
+
+    """
     output = trajectory_msgs.msg.MultiDOFJointTrajectory()
     if "frame" in trajectory:
         output.header.frame_id = trajectory["frame"]
@@ -443,6 +574,12 @@ def parse_multi_dof_trajectory(joint_name, trajectory):
 
 
 def parse_translational_trajectory(joint_name, trajectory):
+    """
+
+    :param joint_name: 
+    :param trajectory: 
+
+    """
     output = trajectory_msgs.msg.MultiDOFJointTrajectory()
     output.header.frame_id = trajectory["frame"]
     output.joint_names.append(joint_name)
@@ -456,6 +593,11 @@ def parse_translational_trajectory(joint_name, trajectory):
 
 
 def parse_joint_trajectories(yaml_object):
+    """
+
+    :param yaml_object: 
+
+    """
     joint_trajectory = trajectory_msgs.msg.JointTrajectory()
     for joint_name in yaml_object["joint_names"]:
         joint_trajectory.joint_names.append(joint_name)
@@ -475,6 +617,15 @@ def parse_joint_trajectories(yaml_object):
 
 
 def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientation):
+    """
+
+    :param goal: 
+    :param source_frame_id: 
+    :param target_frame_id: 
+    :param position: 
+    :param orientation: 
+
+    """
     # For each step.
     translation = translation_matrix(position)
     yaw = 0
@@ -491,6 +642,14 @@ def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientat
 
 
 def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, transform):
+    """
+
+    :param message: 
+    :param source_frame_id: 
+    :param target_frame_id: 
+    :param transform: 
+
+    """
 
     # Stop recursion for methods and primitive types.
     if (
@@ -573,6 +732,18 @@ def transform_coordinates(
     orientation=[0, 0, 0, 1],
     tf_buffer=None,
 ):
+    """
+
+    :param source_frame_id: 
+    :param target_frame_id: 
+    :param position:  (Default value = [0)
+    :param 0: 
+    :param 0]: 
+    :param orientation:  (Default value = [0)
+    :param 1]: 
+    :param tf_buffer:  (Default value = None)
+
+    """
 
     try:
         (translation, rotation) = get_tf_transform(
@@ -589,6 +760,13 @@ def transform_coordinates(
 
 
 def get_transform(source_frame_id, target_frame_id, tf_buffer=None):
+    """
+
+    :param source_frame_id: 
+    :param target_frame_id: 
+    :param tf_buffer:  (Default value = None)
+
+    """
 
     (translation, rotation) = get_tf_transform(
         source_frame_id, target_frame_id, tf_buffer
@@ -599,6 +777,13 @@ def get_transform(source_frame_id, target_frame_id, tf_buffer=None):
 
 
 def get_tf_transform(source_frame_id, target_frame_id, tf_buffer=None):
+    """
+
+    :param source_frame_id: 
+    :param target_frame_id: 
+    :param tf_buffer:  (Default value = None)
+
+    """
 
     listener = None
     if tf_buffer is None:
@@ -632,6 +817,12 @@ def get_tf_transform(source_frame_id, target_frame_id, tf_buffer=None):
 
 
 def transform_vector(transform, vector):
+    """
+
+    :param transform: 
+    :param vector: 
+
+    """
     angle, direction, point = rotation_from_matrix(transform)
     transformed_vector = rotation_matrix(angle, direction).dot(
         [vector.x, vector.y, vector.z, 1.0]
@@ -642,6 +833,12 @@ def transform_vector(transform, vector):
 
 
 def transform_position(transform, position):
+    """
+
+    :param transform: 
+    :param position: 
+
+    """
     transformed_point = transform.dot([position.x, position.y, position.z, 1.0])
     return geometry_msgs.msg.Point(
         transformed_point[0], transformed_point[1], transformed_point[2]
@@ -649,6 +846,12 @@ def transform_position(transform, position):
 
 
 def transform_orientation(transform, orientation):
+    """
+
+    :param transform: 
+    :param orientation: 
+
+    """
     q1 = quaternion_from_matrix(transform)
     q2 = [orientation.x, orientation.y, orientation.z, orientation.w]
     q = quaternion_multiply(q1, q2)
@@ -656,12 +859,24 @@ def transform_orientation(transform, orientation):
 
 
 def transform_pose(transform, pose):
+    """
+
+    :param transform: 
+    :param pose: 
+
+    """
     pose.position = transform_position(transform, pose.position)
     pose.orientation = transform_orientation(transform, pose.orientation)
     return pose
 
 
 def transform_transformation(transform, transformation):
+    """
+
+    :param transform: 
+    :param transformation: 
+
+    """
     transformation.translation = transform_position(
         transform, transformation.translation
     )
@@ -670,6 +885,11 @@ def transform_transformation(transform, transformation):
 
 
 def check_if_vector_valid(vector):
+    """
+
+    :param vector: 
+
+    """
     if vector.x == 0 and vector.y == 0 and vector.z == 0:
         return False
     else:
@@ -677,6 +897,11 @@ def check_if_vector_valid(vector):
 
 
 def check_if_position_valid(position):
+    """
+
+    :param position: 
+
+    """
     if position.x == 0 and position.y == 0 and position.z == 0:
         return False
     else:
@@ -684,6 +909,11 @@ def check_if_position_valid(position):
 
 
 def check_if_orientation_valid(orientation):
+    """
+
+    :param orientation: 
+
+    """
     if (
         orientation.x == 0
         and orientation.y == 0
@@ -696,6 +926,11 @@ def check_if_orientation_valid(orientation):
 
 
 def check_if_pose_valid(pose):
+    """
+
+    :param pose: 
+
+    """
     if check_if_position_valid(pose.position) and check_if_orientation_valid(
         pose.orientation
     ):
@@ -706,10 +941,11 @@ def check_if_pose_valid(pose):
 
 # TODO: We are using this from a newer version. Remove once updated.
 class LocalTransformListener:
-    """
-    :class:`TransformListener` is a convenient way to listen for coordinate frame transformation info.
+    """:class:`TransformListener` is a convenient way to listen for coordinate frame transformation info.
     This class takes an object that instantiates the :class:`BufferInterface` interface, to which
     it propagates changes to the tf frame graph.
+
+
     """
 
     def __init__(self, buffer):
@@ -730,18 +966,26 @@ class LocalTransformListener:
         self.unregister()
 
     def unregister(self):
-        """
-        Unregisters all tf subscribers.
-        """
+        """Unregisters all tf subscribers."""
         self.tf_sub.unregister()
         self.tf_static_sub.unregister()
 
     def callback(self, data):
+        """
+
+        :param data: 
+
+        """
         who = data._connection_header.get("callerid", "default_authority")
         for transform in data.transforms:
             self.buffer.set_transform(transform, who)
 
     def static_callback(self, data):
+        """
+
+        :param data: 
+
+        """
         who = data._connection_header.get("callerid", "default_authority")
         for transform in data.transforms:
             self.buffer.set_transform_static(transform, who)
