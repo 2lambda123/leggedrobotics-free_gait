@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 
-import rospy
-import rospkg
-import free_gait_msgs.msg
-from tf.transformations import *
 import geometry_msgs.msg
-import trajectory_msgs.msg
+import rospkg
+import rospy
 import tf2_ros
-
+import trajectory_msgs.msg
 from tf2_msgs.msg import TFMessage  # For local LocalTransformListener.
+from tf.transformations import *
+
+import free_gait_msgs.msg
 
 
 def get_package_path(package):
@@ -18,6 +18,7 @@ def get_package_path(package):
 
 def load_action_from_file(file_path, placeholders=None):
     import os
+
     from rosparam import load_file
 
     if not os.path.isfile(file_path):
@@ -71,8 +72,9 @@ def load_action_from_file_and_transform(
 ):
     position = [0, 0, 0] if position is None else position
     orientation = [0, 0, 0, 1] if orientation is None else orientation
-    from rosparam import load_file
     import os
+
+    from rosparam import load_file
 
     if not os.path.isfile(file_path):
         rospy.logerr('File with path "' + file_path + '" does not exists.')
