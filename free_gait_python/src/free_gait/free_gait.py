@@ -57,7 +57,9 @@ def load_action_from_file(file_path, placeholders=None):
     return parse_action(parameters, source_frame_id, target_frame_id, position, orientation)
 
 
-def load_action_from_file_and_transform(file_path, source_frame_id='', position=[0, 0, 0], orientation=[0, 0, 0, 1]):
+def load_action_from_file_and_transform(file_path, source_frame_id='', position=None, orientation=None):
+    position = [0, 0, 0] if position is None else position
+    orientation = [0, 0, 0, 1] if orientation is None else orientation
     from rosparam import load_file
     import os
 
@@ -68,7 +70,9 @@ def load_action_from_file_and_transform(file_path, source_frame_id='', position=
     return parse_action(load_file(file_path), source_frame_id, position, orientation)
 
 
-def parse_action(yaml_object, source_frame_id='', target_frame_id='', position=[0, 0, 0], orientation=[0, 0, 0, 1]):
+def parse_action(yaml_object, source_frame_id='', target_frame_id='', position=None, orientation=None):
+    position = [0, 0, 0] if position is None else position
+    orientation = [0, 0, 0, 1] if orientation is None else orientation
     goal = free_gait_msgs.msg.ExecuteStepsGoal()
 
     # For each step.
@@ -467,7 +471,9 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
             adapt_coordinates_recursively(eval("message." + m), source_frame_id, target_frame_id, transform)
 
 # Position and orientation defined in source frame.
-def transform_coordinates(source_frame_id, target_frame_id, position = [0, 0, 0], orientation = [0, 0, 0, 1], tf_buffer = None):
+def transform_coordinates(source_frame_id, target_frame_id, position = None, orientation = None, tf_buffer = None):
+    position = [0, 0, 0] if position is None else position
+    orientation = [0, 0, 0, 1] if orientation is None else orientation
 
     try:
         (translation, rotation) = get_tf_transform(source_frame_id, target_frame_id, tf_buffer)
