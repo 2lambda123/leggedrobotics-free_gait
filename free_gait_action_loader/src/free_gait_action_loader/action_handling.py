@@ -136,7 +136,8 @@ class ActionList:
                 entries.append(entry)
         return entries
 
-    def to_ros_message(self, ids = []):
+    def to_ros_message(self, ids = None):
+        ids = [] if ids is None else ids
         actions = []
         if len(ids):
             actions = self.get_multiple(ids)
