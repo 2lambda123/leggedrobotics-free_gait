@@ -137,6 +137,18 @@ class ActionList:
         return entries
 
     def to_ros_message(self, ids = None):
+        """        Convert the actions to ROS message format.
+
+        This method converts the actions to ROS message format. If specific action IDs are provided, it converts only those actions,
+        otherwise, it converts all the actions available.
+
+        Args:
+            ids (list?): A list of action IDs to be converted. Defaults to None.
+
+        Returns:
+            list: A list of ROS messages representing the converted actions.
+        """
+
         ids = [] if ids is None else ids
         actions = []
         if len(ids):
