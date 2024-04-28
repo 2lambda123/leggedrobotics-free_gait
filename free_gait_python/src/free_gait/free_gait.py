@@ -58,6 +58,20 @@ def load_action_from_file(file_path, placeholders=None):
 
 
 def load_action_from_file_and_transform(file_path, source_frame_id='', position=None, orientation=None):
+    """    Load an action from a file and transform it to a different frame.
+
+    This function loads an action from a file and transforms it to a different frame using the provided position and orientation.
+
+    Args:
+        file_path (str): The path to the file containing the action.
+        source_frame_id (str): The ID of the source frame.
+        position (list or None): The position to transform the action to. Defaults to None.
+        orientation (list or None): The orientation to transform the action to. Defaults to None.
+
+    Returns:
+        dict or None: The transformed action if successful, otherwise None.
+    """
+
     position = [0, 0, 0] if position is None else position
     orientation = [0, 0, 0, 1] if orientation is None else orientation
     from rosparam import load_file
@@ -71,6 +85,23 @@ def load_action_from_file_and_transform(file_path, source_frame_id='', position=
 
 
 def parse_action(yaml_object, source_frame_id='', target_frame_id='', position=None, orientation=None):
+    """    Parse an action from a YAML object and convert it to a free gait goal.
+
+    This function parses an action from a YAML object and converts it to a free gait goal. It iterates through each step
+    in the YAML object and parses the motion parameters for each step. It then adapts the goal to local coordinates if
+    desired.
+
+    Args:
+        yaml_object (object): The YAML object containing the action.
+        source_frame_id (str?): The source frame ID for coordinate transformation. Defaults to ''.
+        target_frame_id (str?): The target frame ID for coordinate transformation. Defaults to ''.
+        position (list?): The position for coordinate transformation. Defaults to None.
+        orientation (list?): The orientation for coordinate transformation. Defaults to None.
+
+    Returns:
+        free_gait_msgs.msg.ExecuteStepsGoal: The goal representing the parsed action.
+    """
+
     position = [0, 0, 0] if position is None else position
     orientation = [0, 0, 0, 1] if orientation is None else orientation
     goal = free_gait_msgs.msg.ExecuteStepsGoal()
@@ -427,6 +458,19 @@ def adapt_coordinates(goal, source_frame_id, target_frame_id, position, orientat
 
 
 def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, transform):
+    """    Recursively adapts the coordinates in a message from one frame to another.
+
+    This function recursively adapts the coordinates in a message from the source frame to the target frame using the
+    provided transform. It stops recursion for methods and primitive types, transforms known geometries, and performs
+    recursion for lists and members.
+
+    Args:
+        message: The input message to adapt.
+        source_frame_id (str): The source frame ID.
+        target_frame_id (str): The target frame ID.
+        transform: The transformation to apply.
+    """
+
 
     # Stop recursion for methods and primitive types.
     if callable(message) or isinstance(message, int) or isinstance(message, str) or \
@@ -472,6 +516,22 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
 
 # Position and orientation defined in source frame.
 def transform_coordinates(source_frame_id, target_frame_id, position = None, orientation = None, tf_buffer = None):
+    """    Transform coordinates from the source frame to the target frame.
+
+    This function transforms the given position and orientation from the source frame to the target frame using the provided
+    tf_buffer. If position or orientation is not provided, default values are used.
+
+    Args:
+        source_frame_id (str): The ID of the source frame.
+        target_frame_id (str): The ID of the target frame.
+        position (list?): The position in the source frame. Defaults to [0, 0, 0].
+        orientation (list?): The orientation in the source frame. Defaults to [0, 0, 0, 1].
+        tf_buffer (object?): The buffer for storing transformation information.
+
+    Returns:
+        tuple: A tuple containing the transformed position and orientation.
+    """
+
     position = [0, 0, 0] if position is None else position
     orientation = [0, 0, 0, 1] if orientation is None else orientation
 
