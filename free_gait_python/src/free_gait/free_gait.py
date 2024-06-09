@@ -473,8 +473,7 @@ def adapt_coordinates_recursively(message, source_frame_id, target_frame_id, tra
 
 
     # Stop recursion for methods and primitive types.
-    if callable(message) or isinstance(message, int) or isinstance(message, str) or \
-            isinstance(message, bool) or isinstance(message, float):
+    if callable(message) or isinstance(message, (int, str, bool, float)):
         return
 
     # Transform known geometries.
